@@ -1,20 +1,29 @@
 function chamarCodec() {
-    // 1. Caminhos dos sons
     const somChamada = new Audio('CodecSounds/codec.mp3');
     const somAlerta = new Audio('CodecSounds/over.mp3');
-
-    const displayMensagem = document.getElementById("mensagem-codec");
-
-    // 2. Inicia o som de chamada e atualiza o texto
+    const display = document.getElementById("mensagem-codec");
+    
+    // Texto que será digitado
+    const textoFinal = "MEYLING: SNAKE? RESPONDA! SNAKE?! SNAAAAAAAKE!!!";
+    
+    // Limpa o campo e inicia o som de chamada
+    display.innerHTML = "";
     somChamada.play();
-    displayMensagem.innerHTML = "CONECTANDO AO CANAL 140.15...";
-    displayMensagem.style.color = "#4ade80"; // Garante que o texto fique verde
+    display.style.color = "#4ade80";
+    display.style.fontWeight = "bold";
 
-    // 3. Após 2 segundos, muda a mensagem e toca o som de "Game Over"
+    // Espera o som de chamada (2 segundos) para começar a digitar
     setTimeout(() => {
         somAlerta.play();
-        // Aqui você muda a frase para o que quiser!
-        displayMensagem.innerHTML = "MEYLING: SNAKE? RESPONDA! SNAKE?! SNAAAAAAAKE!!!";
-        displayMensagem.style.fontWeight = "bold";
-    }, 2500);
-}   
+        let i = 0;
+
+        function digitar() {
+            if (i < textoFinal.length) {
+                display.innerHTML += textoFinal.charAt(i);
+                i++;
+                setTimeout(digitar, 50); // Velocidade da digitação (50ms)
+            }
+        }
+        digitar();
+    }, 2000);
+}
